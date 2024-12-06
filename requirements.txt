@@ -3,4 +3,4 @@ uvicorn
 python-jose[cryptography]
 passlib[bcrypt]
 python-multipart
-jwt
+PyJWT
