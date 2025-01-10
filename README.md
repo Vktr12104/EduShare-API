@@ -1,14 +1,14 @@
 Dibuat oleh Viktor Arsindiantoro Siringoringo - 18222083
 Dibuat menggunakan Azure Container Instance, Anda dapat mengakses layanan melalui titik akhir berikut:
-- Froent End
+- Front End (Dalam Hal ini tidak bisa berjalan karena vercell HTTPS tetapi API masih dalam bentuk HTTP, sehingga masih perlu perbaikan (mohon maaf sebelumnya kepada pak baskra atas kurang maksimalnya diri saya dalam pengerjaan tugas besar in), untuk lengkap mencoba seluruh API yang dibuat dapat diakses melalui dokumentasi Interaktif  Swagger)
 	```
-	
+	https://edushare-fe.vercel.app/
 	```
 - Back end
   	```
 	http://edushare-app.d9e3d2bmewhxadhh.southeastasia.azurecontainer.io:8083
 	```
-# Requierements
+# Requirements
 1. Docker
 2. Python
 3. SQLModel
