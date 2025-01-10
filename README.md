@@ -1,14 +1,50 @@
+Dibuat oleh Viktor Arsindiantoro Siringoringo - 18222083
+Dibuat menggunakan Azure Container Instance, Anda dapat mengakses layanan melalui titik akhir berikut:
+- Froent End
+	```
+	
+	```
+- Back end
+  	```
+	http://edushare-app.d9e3d2bmewhxadhh.southeastasia.azurecontainer.io:8083
+	```
+# Requierements
+1. Docker
+2. Python
+3. SQLModel
+
+# How to run locally (using Docker Compose)
+1. Make sure that Docker daemon already running
+2. Make a virtual environment with this command
+```
+python -m venv venv
+```
+4. Activate virtual environment with this command
+- Windows
+	```
+	source venv/Scripts/activate
+	```
+- Linux & Mac  :
+  	```
+	source venv/bin/activate
+	```
+5. Use this command below to run the app
+  	```
+	docker compose -p my_project up --build --remove-orphans -d
+	```
+
 # Dokumentasi API EduShare
 Selamat datang di API EduShare! API ini memungkinkan Anda untuk berinteraksi dengan platform BerbagiPendidikan, yang mencakup Autentikasi, Endpoint publik, dan akses aman ke data spesifik pengguna.
 
-# URL Dasar
+# URL Dasar Dokumentasi
 URL dasar untuk API yang sudah dideploy adalah: 
 ```
-https://edu-share-api.vercel.app
+http://edushare-app.d9e3d2bmewhxadhh.southeastasia.azurecontainer.io:8083
 ```
 Anda dapat mengakses dokumentasi API interaktif menggunakan Swagger UI di:
 ```
-https://edu-share-api.vercel.app/docs
+http://edushare-app.d9e3d2bmewhxadhh.southeastasia.azurecontainer.io:8083/docs
+http://edushare-app.d9e3d2bmewhxadhh.southeastasia.azurecontainer.io:8083/redoc
 ```
 # Authentication
 API EduShare menggunakan OAuth2 Bearer Tokens untuk mengamankan endpoint. Berikut adalah ringkasan mekanisme autentikasi:
@@ -138,6 +174,129 @@ Bearer Token
 ```
  date: Wed,11 Dec 2024 15:44:21 GMT 
  server: uvicorn 
+```
+### POST /api/v1/auth/request_api_key
+- Deskripsi: Melakukan Akses logout dari akun
+- Body :
+```
+{
+  "username": "string"
+}
+```
+- Responses Header
+```
+{
+  "api_key": "8c62ade9-8d96-4be2-8515-13ef66524961"
+}
+```
+### GET /api/v1/auth/collect
+- Deskripsi: Mendapatkan data collection produk
+- Responses Header
+```
+[
+  {
+    "durasi": 50,
+    "jarak": 2,
+    "nama": "Buku Matematika",
+    "kategori": "Buku",
+    "harga": "50000",
+    "id": 1,
+    "diskon": 10
+  }
+]
+```
+### GET /api/v1/auth/collect/{collect_id}
+- Deskripsi: Mendapatkan data detailed  dari suatu produk
+- Parameters
+```
+collect_id:
+```
+- Responses Header
+```
+{
+  "durasi": 99,
+  "jarak": 2,
+  "nama": "Seragam Sekolah",
+  "kategori": "Seragam",
+  "harga": "100000",
+  "id": 2,
+  "diskon": 15
+}
+```
+### POST /api/v1/auth/order
+- Deskripsi: Melakukan proses ordering
+- authorization :Access_token
+- Body :
+```
+{
+  "nama": "string",
+  "kuantitas": 0
+}
+```
+- Responses Header
+```
+{
+  "nama": "Buku",
+  "id": 2,
+  "kuantitas": 2,
+  "user_id": 1
+}
+```
+### POST /api/v1/auth/order/predict
+- Deskripsi: Melakukan proses predict transaksi method
+- Body :
+```
+{
+  "Kategori_Barang": "string",
+  "Harga_Barang": 0,
+  "Diskon": 0,
+  "Jumlah_Pembelian": 0,
+  "Durasi_Kepemilikan": 0,
+  "Jarak": 0
+}
+```
+- Responses Body
+```
+{
+  "prediction": "Saran Metode Pembayaran : Bayar_Langsung"
+}
+```
+### POST /api/v1/auth/encrypt (API Eksternal)
+- Deskripsi: Mengakses API Eksternal yang bertujuan untuk dapat mengirin pesan transaksi dan pembeli ke penjual
+- Body :
+```
+{
+  "text": "string",
+  "sensitivity": "string"
+}
+```
+- Responses Body
+```
+{
+  "key_id": "L6BCNZUZ62cC0EPIfX0v5w",
+  "cipher_text": "CgoYJQwv",
+  "iv": "9byXAsKg0ljYh/f+2S2EVg=="
+}
+```
+### POST /api/v1/auth/order/predict
+- Deskripsi: Menerima predict api apabila ingin dipakai developer lain
+- authorization :API_Key
+- Body :
+```
+{
+  "Kategori_Barang": "string",
+  "Harga_Barang": 0,
+  "Diskon": 0,
+  "Jumlah_Pembelian": 0,
+  "Durasi_Kepemilikan": 0,
+  "Jarak": 0
+}
+```
+- Responses Body
+```
+{
+  "prediction": "Saran Metode Pembayaran : Bayar_Langsung"
+}
 ```
 
 # Contoh Akses 
