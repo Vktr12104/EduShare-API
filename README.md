@@ -28,7 +28,7 @@ Dibuat menggunakan Azure Container Instance, Anda dapat mengakses layanan melalu
 ```
 python -m venv venv
 ```
-4. Activate virtual environment with this command
+3. Activate virtual environment with this command
 - Windows
 	```
 	source venv/Scripts/activate
@@ -37,7 +37,7 @@ python -m venv venv
   	```
 	source venv/bin/activate
 	```
-5. Use this command below to run the app
+4. Use this command below to run the app
   	```
 	docker compose -p my_project up --build --remove-orphans -d
 	```
