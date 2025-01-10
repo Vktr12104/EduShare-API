@@ -1,0 +1,58 @@
+# services:
+#   mysql:
+#     image: mysql:5.7
+#     container_name: mysql-container
+#     environment:
+#       MYSQL_ROOT_PASSWORD: Viktor12
+#       MYSQL_DATABASE: tangguhpos_auth
+#     ports:
+#       - "3307:3306"
+#     networks:
+#       - app-network
+#   app:
+#     build: .
+#     container_name: python-app
+#     command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8000"
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - DB_URL=mysql+pymysql://root:Viktor12@mysql:3306/tangguhpos_auth
+#     depends_on:
+#       - mysql
+#     networks:
+#       - app-network
+# networks:
+#   app-network:
+#     driver: bridge
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: Viktor12
+      MYSQL_DATABASE: tangguhpos_auth
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./tangguhpos_auth.sql:/docker-entrypoint-initdb.d/tangguhpos_auth.sql
+    networks:
+      - app-network
+
+  app:
+    image: oauth2-app
+    build: .
+    container_name: python-app
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 8083"
+    ports:
+      - "8083:8083"
+    environment:
+      - DB_URL=mysql+pymysql://root:Viktor12@mysql:3306/tangguhpos_auth
+    depends_on:
+      - mysql
+      
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
